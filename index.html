@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPlus Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand" onclick="navigateTo('home')">
+            <div class="logo-main">
+                <span class="logo-text">Health</span>
+                <span class="logo-plus">+</span>
+            </div>
+            <i class="fas fa-heart logo-heart"></i>
+        </div>
+        <div class="nav-links">
+            <a href="#symptom-checker"><i class="fas fa-stethoscope"></i> Symptom Checker</a>
+            <a href="#bmi-calculator"><i class="fas fa-calculator"></i> BMI Calculator</a>
+            <a href="#lifestyle-diseases"><i class="fas fa-heartbeat"></i> Lifestyle Diseases</a>
+            <a href="#habit-tracker"><i class="fas fa-calendar-check"></i> Habit Tracker</a>
+            <a href="#first-aid-guide"><i class="fas fa-kit-medical"></i> First Aid</a>
+            <a href="#health-tips"><i class="fas fa-lightbulb"></i> Health Tips</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div id="fitness-quote-section"></div>
+            <div id="daily-tip"></div>
+            <h1>Welcome to HealthPlus</h1>
+            <p>Your personal healthcare assistant powered by AI</p>
+
+            <!-- Mood Tracker Card in Homepage -->
+            <div class="home-mood-tracker">
+                <h3><i class="fas fa-smile"></i> How are you feeling today?</h3>
+                <div class="mood-selector">
+                    <button class="mood-btn" data-mood="great">
+                        <i class="fas fa-laugh-beam"></i>
+                        <span>Great</span>
+                    </button>
+                    <button class="mood-btn" data-mood="good">
+                        <i class="fas fa-smile"></i>
+                        <span>Good</span>
+                    </button>
+                    <button class="mood-btn" data-mood="okay">
+                        <i class="fas fa-meh"></i>
+                        <span>Okay</span>
+                    </button>
+                    <button class="mood-btn" data-mood="bad">
+                        <i class="fas fa-frown"></i>
+                        <span>Bad</span>
+                    </button>
+                    <button class="mood-btn" data-mood="terrible">
+                        <i class="fas fa-sad-tear"></i>
+                        <span>Terrible</span>
+                    </button>
+                </div>
+                <textarea id="moodNotes" placeholder="Add notes about your day..."></textarea>
+                <button id="saveMood" class="primary-btn">Save Mood</button>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card" onclick="navigateTo('symptom-checker')">
+                    <i class="fas fa-stethoscope"></i>
+                    <h3>Symptom Checker</h3>
+                    <p>Get AI-powered analysis of your symptoms</p>
+                </div>
+                <div class="feature-card" onclick="navigateTo('bmi-calculator')">
+                    <i class="fas fa-calculator"></i>
+                    <h3>BMI Calculator</h3>
+                    <p>Calculate and track your BMI</p>
+                </div>
+                <div class="feature-card" onclick="navigateTo('lifestyle-diseases')">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>Lifestyle Diseases</h3>
+                    <p>Manage and prevent lifestyle diseases</p>
+                </div>
+                <div class="feature-card" onclick="navigateTo('health-tips')">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Health Tips</h3>
+                    <p>Daily health advice and tips</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Symptom Checker Section -->
+        <section id="symptom-checker" class="section">
+            <h2>AI Symptom Checker</h2>
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages will be displayed here -->
+                    <div class="message bot-message">
+                        Hello! I'm your personal health assistant. Please describe your symptoms in detail, and I'll help you understand what might be causing them and suggest possible remedies.
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <textarea id="user-input" placeholder="Describe your symptoms here..." rows="1"></textarea>
+                    <button id="send-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BMI Calculator Section -->
+        <section id="bmi-calculator" class="section">
+            <h2>BMI Calculator</h2>
+            <div class="calculator-container">
+                <div class="input-group">
+                    <label for="weight">Weight (kg)</label>
+                    <input type="number" id="weight" placeholder="Enter weight">
+                </div>
+                <div class="input-group">
+                    <label for="height">Height (cm)</label>
+                    <input type="number" id="height" placeholder="Enter height">
+                </div>
+                <button onclick="calculateBMI()" class="calculate-btn">Calculate BMI</button>
+                <div id="bmi-result" class="result-container"></div>
+            </div>
+        </section>
+
+        <!-- Lifestyle Diseases Section -->
+        <section id="lifestyle-diseases" class="section">
+            <h2>Lifestyle Diseases Guide</h2>
+            <div class="lifestyle-diseases-container">
+                <div class="search-box">
+                    <input type="text" id="diseaseSearch" placeholder="Search diseases...">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="lifestyle-accordion">
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-syringe"></i> Diabetes Mellitus</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Frequent urination, excessive thirst, unexplained weight loss, fatigue</p>
+                            <div class="treatment-section">
+                                <h4>Home Treatment & Management:</h4>
+                                <ul>
+                                    <li>Monitor blood sugar levels regularly</li>
+                                    <li>Follow a balanced, low-glycemic diet</li>
+                                    <li>Exercise for 30 minutes daily</li>
+                                    <li>Maintain a healthy weight</li>
+                                    <li>Take prescribed medications regularly</li>
+                                    <li>Check feet daily for wounds or infections</li>
+                                    <li>Stay hydrated with water</li>
+                                    <li>Get adequate sleep (7-8 hours)</li>
+                                    <li>Manage stress through relaxation techniques</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-heart"></i> Hypertension</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Often asymptomatic, occasional headaches, shortness of breath, nosebleeds</p>
+                            <div class="treatment-section">
+                                <h4>Home Treatment & Management:</h4>
+                                <ul>
+                                    <li>Reduce sodium intake (< 2300mg daily)</li>
+                                    <li>Follow DASH diet rich in fruits and vegetables</li>
+                                    <li>Regular aerobic exercise</li>
+                                    <li>Limit alcohol consumption</li>
+                                    <li>Practice stress management</li>
+                                    <li>Monitor blood pressure regularly</li>
+                                    <li>Maintain healthy weight</li>
+                                    <li>Quit smoking</li>
+                                    <li>Get adequate sleep</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Continue with other diseases following the same format -->
+                    <!-- I'll add a few more key ones, then you can let me know if you want me to continue with the rest -->
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-lungs"></i> Asthma</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Wheezing, shortness of breath, chest tightness, coughing</p>
+                            <div class="treatment-section">
+                                <h4>Home Treatment & Management:</h4>
+                                <ul>
+                                    <li>Identify and avoid triggers</li>
+                                    <li>Use air purifiers at home</li>
+                                    <li>Practice breathing exercises</li>
+                                    <li>Keep rescue inhaler handy</li>
+                                    <li>Follow asthma action plan</li>
+                                    <li>Regular exercise in clean air</li>
+                                    <li>Maintain clean, dust-free environment</li>
+                                    <li>Stay up to date with vaccinations</li>
+                                    <li>Monitor peak flow readings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-lungs-virus"></i> COPD</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Progressive shortness of breath, chronic cough, mucus production</p>
+                            <div class="treatment-section">
+                                <h4>Home Treatment & Management:</h4>
+                                <ul>
+                                    <li>Quit smoking immediately</li>
+                                    <li>Practice pursed-lip breathing</li>
+                                    <li>Use humidifiers</li>
+                                    <li>Regular pulmonary rehabilitation exercises</li>
+                                    <li>Avoid air pollutants</li>
+                                    <li>Get vaccinated against flu and pneumonia</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Maintain good nutrition</li>
+                                    <li>Practice energy conservation techniques</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-brain"></i> Alzheimer's Disease</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Progressive memory loss, confusion, difficulty with familiar tasks, personality changes</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Establish daily routines</li>
+                                    <li>Create a safe and structured environment</li>
+                                    <li>Use memory aids (notes, calendars)</li>
+                                    <li>Engage in cognitive stimulation activities</li>
+                                    <li>Maintain social connections</li>
+                                    <li>Ensure proper nutrition</li>
+                                    <li>Regular physical exercise</li>
+                                    <li>Monitor medication schedule</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-hand-dots"></i> Parkinson's Disease</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Tremors, slow movement, stiffness, balance problems</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Regular exercise and physical therapy</li>
+                                    <li>Speech therapy exercises</li>
+                                    <li>Occupational therapy</li>
+                                    <li>Maintain a balanced diet</li>
+                                    <li>Use assistive devices when needed</li>
+                                    <li>Create a safe home environment</li>
+                                    <li>Join support groups</li>
+                                    <li>Regular medical check-ups</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-brain"></i> Multiple Sclerosis</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Fatigue, vision problems, numbness, difficulty walking</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Regular exercise within limits</li>
+                                    <li>Stress management techniques</li>
+                                    <li>Heat management strategies</li>
+                                    <li>Energy conservation techniques</li>
+                                    <li>Maintain a healthy diet</li>
+                                    <li>Get adequate rest</li>
+                                    <li>Join support groups</li>
+                                    <li>Regular medical monitoring</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-weight"></i> Obesity</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> BMI over 30, excess body fat, difficulty with physical activities</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Create a calorie deficit diet plan</li>
+                                    <li>Regular physical exercise</li>
+                                    <li>Keep food and activity journal</li>
+                                    <li>Practice portion control</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Get adequate sleep</li>
+                                    <li>Join support groups</li>
+                                    <li>Regular health monitoring</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-head-side-virus"></i> Migraine</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Severe headache, sensitivity to light and sound, nausea, visual disturbances</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Identify and avoid triggers</li>
+                                    <li>Maintain regular sleep schedule</li>
+                                    <li>Practice stress management</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Rest in a dark, quiet room</li>
+                                    <li>Use cold/hot compresses</li>
+                                    <li>Keep a migraine diary</li>
+                                    <li>Regular exercise</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-virus"></i> HIV/AIDS</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Weakened immune system, frequent infections, fatigue, weight loss</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Take medications as prescribed</li>
+                                    <li>Maintain proper nutrition</li>
+                                    <li>Practice safe sex</li>
+                                    <li>Regular exercise</li>
+                                    <li>Get adequate rest</li>
+                                    <li>Avoid exposure to infections</li>
+                                    <li>Regular medical check-ups</li>
+                                    <li>Join support groups</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-lungs-virus"></i> Tuberculosis</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Persistent cough, chest pain, weight loss, night sweats, fatigue</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Complete full course of prescribed medications</li>
+                                    <li>Wear mask when around others</li>
+                                    <li>Ensure good ventilation</li>
+                                    <li>Get adequate rest</li>
+                                    <li>Eat nutritious meals</li>
+                                    <li>Avoid alcohol and smoking</li>
+                                    <li>Regular medical follow-up</li>
+                                    <li>Monitor symptoms closely</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-virus"></i> Hepatitis</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Fatigue, jaundice, abdominal pain, loss of appetite, nausea</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Rest adequately</li>
+                                    <li>Avoid alcohol completely</li>
+                                    <li>Eat a balanced, healthy diet</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Practice good hygiene</li>
+                                    <li>Avoid sharing personal items</li>
+                                    <li>Regular medical monitoring</li>
+                                    <li>Get vaccinated (for A and B)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-brain"></i> Depression</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Persistent sadness, loss of interest, sleep changes, fatigue, difficulty concentrating</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Maintain regular sleep schedule</li>
+                                    <li>Exercise regularly</li>
+                                    <li>Practice mindfulness/meditation</li>
+                                    <li>Stay connected with others</li>
+                                    <li>Set realistic daily goals</li>
+                                    <li>Eat a balanced diet</li>
+                                    <li>Avoid alcohol and drugs</li>
+                                    <li>Seek professional help when needed</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-brain"></i> Anxiety Disorders</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Excessive worry, restlessness, difficulty concentrating, sleep problems</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Practice deep breathing exercises</li>
+                                    <li>Regular physical exercise</li>
+                                    <li>Maintain sleep routine</li>
+                                    <li>Limit caffeine and alcohol</li>
+                                    <li>Use relaxation techniques</li>
+                                    <li>Join support groups</li>
+                                    <li>Keep anxiety journal</li>
+                                    <li>Practice stress management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-heart"></i> Heart Disease</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Chest pain, shortness of breath, fatigue, irregular heartbeat</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Follow a heart-healthy diet</li>
+                                    <li>Regular moderate exercise</li>
+                                    <li>Monitor blood pressure</li>
+                                    <li>Maintain healthy weight</li>
+                                    <li>Quit smoking</li>
+                                    <li>Limit alcohol intake</li>
+                                    <li>Manage stress levels</li>
+                                    <li>Take prescribed medications</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-brain"></i> Stroke</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Sudden numbness, confusion, difficulty speaking, vision problems, severe headache</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Follow rehabilitation exercises</li>
+                                    <li>Modify home for safety</li>
+                                    <li>Practice speech therapy exercises</li>
+                                    <li>Maintain healthy diet</li>
+                                    <li>Control blood pressure</li>
+                                    <li>Regular physical therapy</li>
+                                    <li>Join support groups</li>
+                                    <li>Regular medical check-ups</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-bone"></i> Arthritis</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Joint pain, stiffness, swelling, reduced range of motion</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Regular gentle exercise</li>
+                                    <li>Apply hot/cold therapy</li>
+                                    <li>Maintain healthy weight</li>
+                                    <li>Use assistive devices</li>
+                                    <li>Practice joint protection</li>
+                                    <li>Gentle stretching exercises</li>
+                                    <li>Anti-inflammatory diet</li>
+                                    <li>Stress management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-disease"></i> Cancer</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Varies by type - unexplained weight loss, fatigue, pain, unusual bleeding</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Follow treatment plan strictly</li>
+                                    <li>Maintain proper nutrition</li>
+                                    <li>Get adequate rest</li>
+                                    <li>Exercise as tolerated</li>
+                                    <li>Manage side effects</li>
+                                    <li>Join support groups</li>
+                                    <li>Practice stress reduction</li>
+                                    <li>Regular medical monitoring</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-virus"></i> Influenza (Flu)</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Fever, body aches, fatigue, cough, sore throat</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Get plenty of rest</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Take over-the-counter medications</li>
+                                    <li>Use humidifier</li>
+                                    <li>Practice good hygiene</li>
+                                    <li>Monitor temperature</li>
+                                    <li>Eat light, nutritious foods</li>
+                                    <li>Avoid spreading to others</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-lungs-virus"></i> Pneumonia</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Cough with phlegm, fever, difficulty breathing, chest pain</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Complete prescribed antibiotics</li>
+                                    <li>Get plenty of rest</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Use humidifier</li>
+                                    <li>Practice deep breathing</li>
+                                    <li>Monitor temperature</li>
+                                    <li>Avoid smoking</li>
+                                    <li>Follow up with doctor</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-stomach"></i> GERD</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Heartburn, regurgitation, chest pain, difficulty swallowing</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Avoid trigger foods</li>
+                                    <li>Eat smaller meals</li>
+                                    <li>Don't lie down after eating</li>
+                                    <li>Elevate head while sleeping</li>
+                                    <li>Maintain healthy weight</li>
+                                    <li>Avoid tight clothing</li>
+                                    <li>Quit smoking</li>
+                                    <li>Stress management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-wheat"></i> Celiac Disease</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Digestive issues, fatigue, weight loss, skin rash</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Follow strict gluten-free diet</li>
+                                    <li>Read food labels carefully</li>
+                                    <li>Avoid cross-contamination</li>
+                                    <li>Take prescribed supplements</li>
+                                    <li>Monitor nutritional status</li>
+                                    <li>Join support groups</li>
+                                    <li>Regular medical check-ups</li>
+                                    <li>Keep food diary</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-kidneys"></i> Kidney Disease</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Fatigue, swelling, changes in urination, high blood pressure</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Follow renal diet</li>
+                                    <li>Monitor fluid intake</li>
+                                    <li>Control blood pressure</li>
+                                    <li>Regular exercise</li>
+                                    <li>Take medications as prescribed</li>
+                                    <li>Monitor weight daily</li>
+                                    <li>Avoid nephrotoxic substances</li>
+                                    <li>Regular medical check-ups</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-bacterium"></i> UTI</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Frequent urination, burning sensation, cloudy urine, pelvic pain</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Complete prescribed antibiotics</li>
+                                    <li>Drink plenty of water</li>
+                                    <li>Urinate frequently</li>
+                                    <li>Use heating pad</li>
+                                    <li>Practice good hygiene</li>
+                                    <li>Avoid irritating products</li>
+                                    <li>Wear cotton underwear</li>
+                                    <li>Take probiotics</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-user-nurse"></i> Thyroid Disorders</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Weight changes, fatigue, mood changes, temperature sensitivity</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Take medications as prescribed</li>
+                                    <li>Monitor symptoms</li>
+                                    <li>Maintain healthy diet</li>
+                                    <li>Regular exercise</li>
+                                    <li>Get adequate sleep</li>
+                                    <li>Manage stress</li>
+                                    <li>Regular blood tests</li>
+                                    <li>Avoid iodine-rich foods if needed</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-virus"></i> Chickenpox</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Itchy rash, fever, fatigue, loss of appetite</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Rest and isolate</li>
+                                    <li>Use calamine lotion</li>
+                                    <li>Take oatmeal baths</li>
+                                    <li>Avoid scratching</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Wear loose clothing</li>
+                                    <li>Monitor temperature</li>
+                                    <li>Use antihistamines if needed</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-virus"></i> Measles</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Rash, high fever, cough, runny nose, red eyes</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Rest and isolate</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Use humidifier</li>
+                                    <li>Monitor temperature</li>
+                                    <li>Dim lights for eye comfort</li>
+                                    <li>Take vitamin A if prescribed</li>
+                                    <li>Maintain good hygiene</li>
+                                    <li>Follow up with doctor</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-virus"></i> Mumps</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Swollen salivary glands, fever, headache, muscle aches</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Rest and isolate</li>
+                                    <li>Apply cold compresses</li>
+                                    <li>Eat soft foods</li>
+                                    <li>Stay hydrated</li>
+                                    <li>Take pain relievers</li>
+                                    <li>Avoid acidic foods</li>
+                                    <li>Monitor temperature</li>
+                                    <li>Practice good hygiene</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-allergies"></i> Eczema</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Dry, itchy skin, redness, inflammation, rough patches</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Moisturize regularly</li>
+                                    <li>Identify and avoid triggers</li>
+                                    <li>Use gentle skincare products</li>
+                                    <li>Take lukewarm baths</li>
+                                    <li>Wear soft, breathable clothing</li>
+                                    <li>Manage stress</li>
+                                    <li>Use prescribed medications</li>
+                                    <li>Keep nails trimmed</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-allergies"></i> Psoriasis</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Red, scaly patches, itching, burning, joint pain</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Use prescribed topical treatments</li>
+                                    <li>Take regular baths</li>
+                                    <li>Moisturize frequently</li>
+                                    <li>Get sunlight exposure</li>
+                                    <li>Avoid triggers</li>
+                                    <li>Manage stress</li>
+                                    <li>Maintain healthy weight</li>
+                                    <li>Join support groups</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lifestyle-item">
+                        <div class="lifestyle-header" onclick="toggleLifestyle(this)">
+                            <h3><i class="fas fa-tint"></i> Anaemia</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="lifestyle-content">
+                            <p><strong>Key Symptoms:</strong> Fatigue, weakness, pale skin, shortness of breath, dizziness, cold hands and feet</p>
+                            <div class="treatment-section">
+                                <h4>Home Management:</h4>
+                                <ul>
+                                    <li>Eat iron-rich foods (lean meat, leafy greens, beans)</li>
+                                    <li>Include vitamin C to enhance iron absorption</li>
+                                    <li>Take prescribed iron supplements</li>
+                                    <li>Avoid tea/coffee with meals</li>
+                                    <li>Get adequate rest</li>
+                                    <li>Exercise moderately as tolerated</li>
+                                    <li>Regular blood tests as recommended</li>
+                                    <li>Maintain a balanced diet</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Health Tips Section -->
+        <section id="health-tips" class="section">
+            <h2>Daily Health Tips</h2>
+            <div class="tips-container">
+                <div id="daily-tip" class="tip-card">
+                    <!-- Daily tip will be displayed here -->
+                </div>
+                <div class="tips-grid" id="tips-grid">
+                    <!-- More health tips will be displayed here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Add new Habit Tracker Section before First Aid Guide Section -->
+        <section id="habit-tracker" class="section">
+            <h2>Healthy Habit Tracker</h2>
+            <div class="habit-tracker-container">
+                <div class="habit-input-section">
+                    <h3>Create New Healthy Habits</h3>
+                    <div class="habit-form">
+                        <div class="habit-input-group">
+                            <input type="text" id="habit-name" placeholder="Enter new habit (e.g., 'Morning Walk')">
+                            <select id="habit-category">
+                                <option value="exercise">Exercise</option>
+                                <option value="nutrition">Nutrition</option>
+                                <option value="mindfulness">Mindfulness</option>
+                                <option value="sleep">Sleep</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <button onclick="addHabit()" class="add-habit-btn">
+                                <i class="fas fa-plus"></i> Add Habit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="habits-list">
+                    <div class="habits-header">
+                        <h3>Your Habits</h3>
+                        <p>Track up to 5 habits at a time for better focus</p>
+                    </div>
+                    <div id="habits-container">
+                        <!-- Habits will be listed here -->
+                    </div>
+                </div>
+
+                <div class="calendar-section">
+                    <div class="calendar-header">
+                        <button onclick="previousMonth()" class="calendar-nav-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="current-month">September 2023</h3>
+                        <button onclick="nextMonth()" class="calendar-nav-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-days">
+                            <div>Sun</div>
+                            <div>Mon</div>
+                            <div>Tue</div>
+                            <div>Wed</div>
+                            <div>Thu</div>
+                            <div>Fri</div>
+                            <div>Sat</div>
+                        </div>
+                        <div id="calendar-dates" class="calendar-dates">
+                            <!-- Calendar dates will be generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="habit-stats">
+                    <h3>Progress Overview</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-fire"></i>
+                            <h4>Current Streak</h4>
+                            <p id="current-streak">0 days</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-trophy"></i>
+                            <h4>Best Streak</h4>
+                            <p id="best-streak">0 days</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>Completion Rate</h4>
+                            <p id="completion-rate">0%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medicine Reminder Section -->
+            <div class="medicine-reminder-container">
+                <h3><i class="fas fa-pills"></i> Medicine Reminder</h3>
+                <div class="medicine-content">
+                    <!-- Add Medication Form -->
+                    <div class="add-medication-card">
+                        <h4>Add Medication</h4>
+                        <form id="medicationForm">
+                            <div class="form-group">
+                                <label for="medName">Medication Name</label>
+                                <input type="text" id="medName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="medDosage">Dosage</label>
+                                <input type="text" id="medDosage" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="medFrequency">Frequency</label>
+                                <select id="medFrequency" required>
+                                    <option value="daily">Daily</option>
+                                    <option value="twice">Twice Daily</option>
+                                    <option value="thrice">Thrice Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="medTime">Time</label>
+                                <input type="time" id="medTime" required>
+                            </div>
+                            
+                            <button type="submit" class="primary-btn">Add Medication</button>
+                        </form>
+                    </div>
+
+                    <!-- Medication List -->
+                    <div class="medication-list-card">
+                        <h4><i class="fas fa-list"></i> Your Medications</h4>
+                        <div id="medicationList" class="medication-list">
+                            <!-- Medications will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- First Aid Guide Section -->
+        <section id="first-aid-guide" class="section">
+            <h2>First Aid Guide</h2>
+            <div class="first-aid-guide-container">
+                <div class="search-box">
+                    <input type="text" id="firstAidSearch" placeholder="Search first aid topics...">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="first-aid-accordion">
+                    <!-- 1. Principles and Practices -->
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-book-medical"></i> 1. Principles and Practices of First Aid</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <div class="subsection">
+                                <h4>Key Messages</h4>
+                                <ul>
+                                    <li>First aid preserves life, prevents deterioration, and promotes recovery</li>
+                                    <li>It is a vital skill requiring training</li>
+                                    <li>Golden rules: Ensure safety first and perform tasks in a logical order</li>
+                                </ul>
+                            </div>
+                            <div class="subsection">
+                                <h4>Golden Rules of First Aid</h4>
+                                <ol>
+                                    <li>Assess the situation for danger before acting</li>
+                                    <li>Remove the victim from the cause of injury, if possible</li>
+                                    <li>Resuscitate if necessary</li>
+                                    <li>Loosen tight clothing</li>
+                                    <li>Control bleeding and cover wounds</li>
+                                    <li>Avoid unnecessary movement unless required</li>
+                                    <li>Provide reassurance and seek help</li>
+                                    <li>Improvise with available materials</li>
+                                    <li>Treat for shock</li>
+                                    <li>Transport the victim safely</li>
+                                    <li>Stay with the victim until professional help arrives</li>
+                                    <li>Keep emergency contacts handy for quick access</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Assessment -->
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-clipboard-check"></i> 2. Assessment in First Aid</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <div class="subsection">
+                                <h4>Key Steps</h4>
+                                <ol>
+                                    <li><strong>Primary & Secondary Survey:</strong> Check airway, breathing, and circulation</li>
+                                    <li><strong>Diagnosis:</strong> Assess signs, symptoms, and history</li>
+                                    <li><strong>Scene Safety:</strong> Ensure a safe environment before providing care</li>
+                                    <li><strong>Assessing Responsiveness:</strong> Check for consciousness by gently shaking the person and calling out</li>
+                                    <li><strong>Check for Medical Identification:</strong> Look for medical bracelets or cards indicating pre-existing conditions</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Body Structure -->
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-user-injured"></i> 3. Structure and Function of Essential Body Parts</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <div class="subsection">
+                                <h4>Key Points</h4>
+                                <ul>
+                                    <li><strong>Skull:</strong> Protects the brain</li>
+                                    <li><strong>Spine:</strong> Houses the spinal cord; crucial in movement</li>
+                                    <li><strong>Ribs & Breastbone:</strong> Protect the heart and lungs</li>
+                                    <li><strong>Lungs:</strong> Assist in oxygen intake and carbon dioxide expulsion</li>
+                                    <li><strong>Heart:</strong> Pumps oxygenated blood to the body</li>
+                                    <li><strong>Abdomen:</strong> Contains vital organs such as the liver, kidneys, and intestines</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Basic Life Support -->
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-heartbeat"></i> 4. Basic Life Support (Resuscitation)</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <div class="subsection">
+                                <h4>Key Steps for CPR</h4>
+                                <div class="steps-grid">
+                                    <div class="step-card">
+                                        <img src="images/cpr-check.jpg" alt="Check responsiveness">
+                                        <p>1. Check Responsiveness – Shake and shout</p>
+                                    </div>
+                                    <div class="step-card">
+                                        <img src="images/cpr-position.jpg" alt="Position hands">
+                                        <p>2. Position hands in center of chest</p>
+                                    </div>
+                                    <div class="step-card">
+                                        <img src="images/cpr-compression.jpg" alt="Perform compressions">
+                                        <p>3. Perform 30 chest compressions</p>
+                                    </div>
+                                    <div class="step-card">
+                                        <img src="images/cpr-breath.jpg" alt="Give rescue breaths">
+                                        <p>4. Give 2 rescue breaths</p>
+                                    </div>
+                                    <div class="step-card">
+                                        <img src="images/cpr-repeat.jpg" alt="Repeat cycle">
+                                        <p>5. Repeat cycle of 30:2</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subsection">
+                                <h4>Heimlich Maneuver (Choking First Aid)</h4>
+                                <div class="steps-grid">
+                                    <div class="step-card">
+                                        <img src="images/heimlich-position.jpg" alt="Position behind person">
+                                        <p>1. Stand behind the person</p>
+                                    </div>
+                                    <div class="step-card">
+                                        <img src="images/heimlich-fist.jpg" alt="Make a fist">
+                                        <p>2. Make a fist above their navel</p>
+                                    </div>
+                                    <div class="step-card">
+                                        <img src="images/heimlich-thrust.jpg" alt="Perform thrust">
+                                        <p>3. Give quick, upward thrusts</p>
+                                    </div>
+                                    <div class="step-card">
+                                        <img src="images/heimlich-repeat.jpg" alt="Repeat if needed">
+                                        <p>4. Repeat until object is expelled</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="warning-box">
+                                <p><i class="fas fa-exclamation-triangle"></i> Important: These images are for reference only. Proper training is essential for performing these procedures effectively.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Conditions - Previously nested under section 5 -->
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-burn"></i> Burns</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Cool the burn with running water</li>
+                                <li>Cover with a sterile dressing</li>
+                                <li>Avoid applying creams or breaking blisters</li>
+                                <li>Seek medical help for severe burns</li>
+                                <li>Remove any tight clothing or jewelry near the affected area</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-tint"></i> Bleeding</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Apply direct pressure</li>
+                                <li>Elevate the injured limb</li>
+                                <li>Use a clean dressing to cover the wound</li>
+                                <li>Seek immediate help for severe bleeding</li>
+                                <li>Apply a tourniquet only as a last resort</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-bone"></i> Fractures</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Immobilize the limb using splints</li>
+                                <li>Apply a sling for arm fractures</li>
+                                <li>Avoid unnecessary movement</li>
+                                <li>Seek professional medical attention</li>
+                                <li>Do not attempt to realign the bone yourself</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-head-side-cough"></i> Choking</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Encourage coughing</li>
+                                <li>Perform 5 back blows</li>
+                                <li>If unsuccessful, perform abdominal thrusts (Heimlich maneuver)</li>
+                                <li>Call emergency services if needed</li>
+                                <li>Check for signs of cyanosis (bluish skin)</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-skull-crossbones"></i> Poisoning</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Identify the poison</li>
+                                <li>Do not induce vomiting unless instructed</li>
+                                <li>Seek emergency medical help immediately</li>
+                                <li>If inhaled, move the person to fresh air</li>
+                                <li>Store all household chemicals and medicines safely</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-snake"></i> Snake Bites</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Keep the victim calm and still</li>
+                                <li>Immobilize the affected limb</li>
+                                <li>Do not suck the venom out</li>
+                                <li>Seek medical assistance immediately</li>
+                                <li>Keep the bite area below heart level</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-bolt"></i> Electric Shock</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Do not touch the person until power is off</li>
+                                <li>Turn off electricity at source</li>
+                                <li>Call emergency services immediately</li>
+                                <li>Check breathing and pulse; begin CPR if needed</li>
+                                <li>Cover burns with sterile dressing</li>
+                                <li>Monitor for shock</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-head-injury"></i> Head Injury</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Check consciousness and breathing</li>
+                                <li>Keep the person still and lying down</li>
+                                <li>Apply cold compress to reduce swelling</li>
+                                <li>Monitor for signs of concussion (confusion, dizziness)</li>
+                                <li>Do not let the person sleep if concussion is suspected</li>
+                                <li>Seek immediate medical attention</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-band-aid"></i> Sprains and Strains</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Remember RICE:
+                                    <ul>
+                                        <li>Rest the injured area</li>
+                                        <li>Ice for 20 minutes every 2-3 hours</li>
+                                        <li>Compression with elastic bandage</li>
+                                        <li>Elevation above heart level</li>
+                                    </ul>
+                                </li>
+                                <li>Avoid heat for first 48 hours</li>
+                                <li>Do not massage the injured area</li>
+                                <li>Seek medical attention if severe</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-temperature-high"></i> Heat Exhaustion/Stroke</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Move to a cool place</li>
+                                <li>Remove excess clothing</li>
+                                <li>Apply cool, wet cloths</li>
+                                <li>Fan the person</li>
+                                <li>Give sips of water if conscious</li>
+                                <li>Call emergency services if condition worsens</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-temperature-low"></i> Hypothermia</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Move to warm environment</li>
+                                <li>Remove wet clothing</li>
+                                <li>Wrap in warm blankets</li>
+                                <li>Give warm beverages if conscious</li>
+                                <li>Do not apply direct heat</li>
+                                <li>Seek medical attention</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-eye"></i> Eye Injuries</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Do not rub the eye</li>
+                                <li>Flush with clean water for chemical exposure</li>
+                                <li>Cover the eye with a sterile pad</li>
+                                <li>Seek immediate medical attention</li>
+                                <li>Do not attempt to remove embedded objects</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-tooth"></i> Dental Injuries</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Save any knocked-out teeth</li>
+                                <li>Hold tooth by crown, not root</li>
+                                <li>Rinse tooth without scrubbing</li>
+                                <li>Place in milk or saline solution</li>
+                                <li>See dentist within 30 minutes if possible</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-brain"></i> Seizures</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Clear the area of hazards</li>
+                                <li>Protect head with something soft</li>
+                                <li>Do not restrain the person</li>
+                                <li>Do not put anything in their mouth</li>
+                                <li>Time the seizure if possible</li>
+                                <li>Place in recovery position after seizure ends</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-bug"></i> Insect Bites/Stings</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Remove stinger if present</li>
+                                <li>Clean the area with soap and water</li>
+                                <li>Apply cold compress</li>
+                                <li>Use calamine lotion or antihistamine</li>
+                                <li>Monitor for allergic reaction</li>
+                                <li>Seek medical help if allergic symptoms develop</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-water"></i> Drowning</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Remove from water safely</li>
+                                <li>Check breathing and circulation</li>
+                                <li>Begin CPR if necessary</li>
+                                <li>Remove wet clothing</li>
+                                <li>Keep person warm</li>
+                                <li>Seek emergency medical care</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-lungs"></i> Asthma Attack</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Help person sit upright</li>
+                                <li>Assist with prescribed inhaler</li>
+                                <li>Keep person calm</li>
+                                <li>Loosen tight clothing</li>
+                                <li>Call emergency if symptoms worsen</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-droplet"></i> Nosebleed</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Sit upright and lean slightly forward</li>
+                                <li>Pinch soft part of nose</li>
+                                <li>Breathe through mouth</li>
+                                <li>Hold for 10-15 minutes</li>
+                                <li>Apply cold compress to nose/face</li>
+                                <li>Seek help if bleeding persists</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-syringe"></i> Diabetic Emergency</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Check if person is conscious</li>
+                                <li>If conscious and blood sugar low:
+                                    <ul>
+                                        <li>Give sugar, sweet juice, or glucose tablets</li>
+                                        <li>Wait 15 minutes and recheck</li>
+                                    </ul>
+                                </li>
+                                <li>If unconscious:
+                                    <ul>
+                                        <li>Place in recovery position</li>
+                                        <li>Call emergency services</li>
+                                    </ul>
+                                </li>
+                                <li>Monitor breathing and pulse</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-heart"></i> Chest Pain</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <ol>
+                                <li>Help person sit in comfortable position</li>
+                                <li>Call emergency services immediately</li>
+                                <li>Loosen tight clothing</li>
+                                <li>Monitor breathing and consciousness</li>
+                                <li>Be prepared to perform CPR</li>
+                                <li>Give aspirin if available and no allergies</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- 6. Additional Tips -->
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-info-circle"></i> 6. Additional First Aid Tips</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <div class="subsection">
+                                <h4>General Tips</h4>
+                                <ul>
+                                    <li>Learn the recovery position for unconscious but breathing individuals</li>
+                                    <li>Teach children basic first aid and emergency contact numbers</li>
+                                    <li>Have an emergency plan in place at home and work</li>
+                                    <li>Store first aid kits in accessible locations</li>
+                                    <li>Take a certified first aid course for hands-on training</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Do's and Don'ts -->
+                    <div class="first-aid-item">
+                        <div class="first-aid-header" onclick="toggleFirstAid(this)">
+                            <h3><i class="fas fa-check-circle"></i> 7. Emergency First Aid Do's and Don'ts</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="first-aid-content">
+                            <div class="subsection">
+                                <h4>Do's</h4>
+                                <ul>
+                                    <li>Stay calm and assess the situation</li>
+                                    <li>Call emergency services when necessary</li>
+                                    <li>Use protective gear like gloves</li>
+                                    <li>Apply firm pressure to control bleeding</li>
+                                    <li>Keep the person warm and comfortable</li>
+                                    <li>Encourage the injured person to stay still if spinal injury is suspected</li>
+                                </ul>
+                            </div>
+                            <div class="subsection">
+                                <h4>Don'ts</h4>
+                                <ul>
+                                    <li>Do not move an unconscious person unnecessarily</li>
+                                    <li>Do not apply ice directly to burns</li>
+                                    <li>Do not give food or drinks to an unconscious person</li>
+                                    <li>Do not attempt to reset a broken bone</li>
+                                    <li>Do not remove deeply embedded objects from a wound</li>
+                                    <li>Do not leave a person alone if they are in critical condition</li>
+                                    <li>Do not touch a person experiencing electric shock without ensuring power is off</li>
+                                </ul>
+                            </div>
+                            <div class="warning-box">
+                                <p><i class="fas fa-exclamation-triangle"></i> Remember: This guide is for basic first aid only. Always seek professional medical help in serious situations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mental Health Support Section -->
+        <section id="mental-health" class="section">
+            <h2>Mental Health Support</h2>
+            
+            <!-- Mood Tracker -->
+            <div class="mental-health-container">
+                <div class="mood-tracker-card">
+                    <h3><i class="fas fa-smile"></i> Daily Mood Tracker</h3>
+                    <div class="mood-selector">
+                        <button class="mood-btn" data-mood="great">
+                            <i class="fas fa-laugh-beam"></i>
+                            <span>Great</span>
+                        </button>
+                        <button class="mood-btn" data-mood="good">
+                            <i class="fas fa-smile"></i>
+                            <span>Good</span>
+                        </button>
+                        <button class="mood-btn" data-mood="okay">
+                            <i class="fas fa-meh"></i>
+                            <span>Okay</span>
+                        </button>
+                        <button class="mood-btn" data-mood="bad">
+                            <i class="fas fa-frown"></i>
+                            <span>Bad</span>
+                        </button>
+                        <button class="mood-btn" data-mood="terrible">
+                            <i class="fas fa-sad-tear"></i>
+                            <span>Terrible</span>
+                        </button>
+                    </div>
+                    <textarea id="moodNotes" placeholder="Add notes about your day..."></textarea>
+                    <button id="saveMood" class="primary-btn">Save Mood</button>
+                </div>
+
+                <!-- Meditation Timer -->
+                <div class="meditation-card">
+                    <h3><i class="fas fa-om"></i> Meditation Timer</h3>
+                    <div class="meditation-timer">
+                        <div class="timer-display">
+                            <span id="minutes">05</span>:<span id="seconds">00</span>
+                        </div>
+                        <div class="timer-controls">
+                            <button id="startMeditation" class="primary-btn">Start</button>
+                            <button id="pauseMeditation" class="secondary-btn" disabled>Pause</button>
+                            <button id="resetMeditation" class="secondary-btn">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="resources-card">
+                    <h3><i class="fas fa-phone"></i> 24/7 Support Helplines</h3>
+                    <div class="helpline-list">
+                        <div class="helpline-item">
+                            <h4>Emergency Mental Health</h4>
+                            <p><i class="fas fa-phone-alt"></i> 988</p>
+                        </div>
+                        <div class="helpline-item">
+                            <h4>Crisis Text Line</h4>
+                            <p><i class="fas fa-comment-dots"></i> Text HOME to 741741</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
