@@ -1,5 +1,5 @@
 // Replace with your actual Gemini API key
-const API_KEY = 'AIzaSyBq2s3p6PoT3BBn_MTF-llAAnfLwAW3KGA';
+const API_KEY = 'process.env.GOOGLE_API_KEY';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
 // Navigation
